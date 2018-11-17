@@ -27,6 +27,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	public float backwardSpeed = 2.0f;
 	// 旋回速度
 	public float rotateSpeed = 2.0f;
+	public float rotateSpeed = 15f;
 	// ジャンプ威力
 	public float jumpPower = 3.0f; 
 	// キャラクターコントローラ（カプセルコライダ）の参照
@@ -56,6 +57,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     private Vector2 pointB;
 
     private Transform mousedownTransform;
+    private Vector3 mousedownCameraProjectedRight, mousedownCameraProjectedForward;
+
 
     public Transform circle;
     public Transform outerCircle;
@@ -92,6 +95,9 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         {
             touchStart = true;
             mousedownTransform = cameraObject.transform;
+            //mousedownTransform = cameraObject.transform;
+            mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
+            mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.forward, transform.up).normalized;
             pointB = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         }
         else
@@ -172,6 +178,9 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         float step = rotateSpeed * Time.deltaTime;
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x*Vector3.right + direction.y*Vector3.forward), step, 0.0f);
         Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
+        //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownCameraProjectedRight + direction.y * mousedownCameraProjectedForward), step, 0.0f);
+        
         transform.rotation = Quaternion.LookRotation(newDir);
 
 
