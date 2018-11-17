@@ -16,7 +16,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     public Joystick joystick;
     public FloatingJoystick button;
 
-	public float animSpeed = 1.5f;				// アニメーション再生速度設定
     public float animSpeed = 1.5f;				// アニメーション再生速度設定
 	public float lookSmoother = 3.0f;			// a smoothing setting for camera motion
 	public bool useCurves = true;				// Mecanimでカーブ調整を使うか設定する
@@ -29,7 +28,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	// 後退速度
 	public float backwardSpeed = 2.0f;
 	// 旋回速度
-	public float rotateSpeed = 2.0f;
 	public float rotateSpeed = 15f;
 	// ジャンプ威力
 	public float jumpPower = 3.0f; 
@@ -59,8 +57,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     private Vector2 pointA;
     private Vector2 pointB;
 
-    private Transform mousedownTransform;
-    private Vector3 mousedownCameraProjectedRight, mousedownCameraProjectedForward;
     //private Vector3 mousedownCameraProjectedRight, mousedownCameraProjectedForward;
 
 
@@ -84,7 +80,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     }
 
     void Update ()
-    {
     {/*
         if (Input.GetMouseButtonDown(0))
         {
@@ -94,13 +89,11 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
            /* circle.transform.position = pointA * -1;
             outerCircle.transform.position = pointA * -1;
             circle.GetComponent<SpriteRenderer>().enabled = true;
-            outerCircle.GetComponent<SpriteRenderer>().enabled = true;*/
             outerCircle.GetComponent<SpriteRenderer>().enabled = true;
         }
         if (Input.GetMouseButton(0))
         {
             touchStart = true;
-            mousedownTransform = cameraObject.transform;
 
             //mousedownTransform = cameraObject.transform;
             mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
@@ -110,7 +103,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         else
         {
             touchStart = false;
-        }
         } */
     }
 	
@@ -118,33 +110,14 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
 	void FixedUpdate ()
 	{
-        Vector2 direction = new Vector2(0f, 0f);
-        if (touchStart)
-        {
-            Vector2 offset = pointB - pointA;
-            direction = Vector2.ClampMagnitude(offset, 1.0f);
-           // moveCharacter(direction * -1);
-
-            // circle.transform.position = new Vector2(pointA.x + direction.x, pointA.y + direction.y) * -1;
-        }
-        else
-        {/*
-            circle.GetComponent<SpriteRenderer>().enabled = false;
-            outerCircle.GetComponent<SpriteRenderer>().enabled = false;*/
-        }
-
         Vector2 direction = new Vector2(joystick.Horizontal, joystick.Vertical);
 
 
-
-
-        float h = Mathf.Atan2(direction.y, direction.x);
         float v = direction.magnitude;
 
         // float h = Input.GetAxis("Horizontal");				// 入力デバイスの水平軸をhで定義
         // float v = Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義
         anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
-		anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
 		anim.SetFloat("Direction", 0); 						// Animator側で設定している"Direction"パラメタにhを渡す
 		anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 		currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
@@ -165,8 +138,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 			velocity *= backwardSpeed;	// 移動速度を掛ける
 		}
 		
-		if (Input.GetButtonDown("Jump")) {	// スペースキーを入力したら
-
 		if (button.isPressed) {	// スペースキーを入力したら
             
 			//アニメーションのステートがLocomotionの最中のみジャンプできる
@@ -189,7 +160,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 
         float step = rotateSpeed * Time.deltaTime;
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x*Vector3.right + direction.y*Vector3.forward), step, 0.0f);
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
         Vector3 mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
         Vector3 mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.forward, transform.up).normalized;
@@ -273,18 +243,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 			}
 		}
 	}
-
-	void OnGUI()
-	{
-		GUI.Box(new Rect(Screen.width -260, 10 ,250 ,150), "Interaction");
-		GUI.Label(new Rect(Screen.width -245,30,250,30),"Up/Down Arrow : Go Forwald/Go Back");
-		GUI.Label(new Rect(Screen.width -245,50,250,30),"Left/Right Arrow : Turn Left/Turn Right");
-		GUI.Label(new Rect(Screen.width -245,70,250,30),"Hit Space key while Running : Jump");
-		GUI.Label(new Rect(Screen.width -245,90,250,30),"Hit Spase key while Stopping : Rest");
-		GUI.Label(new Rect(Screen.width -245,110,250,30),"Left Control : Front Camera");
-		GUI.Label(new Rect(Screen.width -245,130,250,30),"Alt : LookAt Camera");
-	}
-
 
 	// キャラクターのコライダーサイズのリセット関数
 	void resetCollider()
