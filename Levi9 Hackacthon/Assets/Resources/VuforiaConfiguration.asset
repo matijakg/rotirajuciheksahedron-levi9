@@ -18,11 +18,13 @@ MonoBehaviour:
     cameraDeviceModeSetting: -1
     maxSimultaneousImageTargets: 1
     maxSimultaneousObjectTargets: 1
+    maxSimultaneousImageTargets: 16
+    maxSimultaneousObjectTargets: 16
     useDelayedLoadingObjectTargets: 0
     cameraDirection: 0
     mirrorVideoBackground: 0
     version: 7.5.20
-    eulaAccepted: 0
+    eulaAccepted: 1
   digitalEyewear:
     cameraOffset: 0.06
     distortionRenderingLayer: 31
@@ -66,5 +68,5 @@ MonoBehaviour:
   webcam:
     deviceNameSetInEditor: 
     flipHorizontally: 0
-    turnOffWebCam: 0
+    turnOffWebCam: 1
     renderTextureLayer: 30

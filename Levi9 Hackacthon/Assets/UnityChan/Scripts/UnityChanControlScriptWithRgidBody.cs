@@ -79,35 +79,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
        
     }
 
-    void Update ()
-    {/*
-        if (Input.GetMouseButtonDown(0))
-        {
-            // Generate joystick
-            pointA = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-           /* circle.transform.position = pointA * -1;
-            outerCircle.transform.position = pointA * -1;
-            circle.GetComponent<SpriteRenderer>().enabled = true;
-            outerCircle.GetComponent<SpriteRenderer>().enabled = true;
-        }
-        if (Input.GetMouseButton(0))
-        {
-            touchStart = true;
-
-            //mousedownTransform = cameraObject.transform;
-            mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
-            mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.forward, transform.up).normalized;
-            pointB = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        }
-        else
-        {
-            touchStart = false;
-        } */
-    }
-	
-	
-// 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
 	void FixedUpdate ()
 	{
         Vector2 direction = new Vector2(joystick.Horizontal, joystick.Vertical);
