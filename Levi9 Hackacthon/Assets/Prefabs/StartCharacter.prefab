@@ -5314,6 +5314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9001bcbd91e76437cb0f52f12764f2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystick: {fileID: 0}
+  button: {fileID: 0}
   animSpeed: 1.5
   lookSmoother: 3
   useCurves: 1
