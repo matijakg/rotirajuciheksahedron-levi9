@@ -5314,18 +5314,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9001bcbd91e76437cb0f52f12764f2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystick: {fileID: 0}
+  button: {fileID: 0}
   animSpeed: 1.5
   lookSmoother: 3
   useCurves: 1
   useCurvesHeight: 0.5
-  forwardSpeed: 7
-  backwardSpeed: 2
+  forwardSpeed: 2
+  backwardSpeed: 1
   rotateSpeed: 2
   jumpPower: 3
-  player: {fileID: 0}
   speed: 5
-  circle: {fileID: 0}
-  outerCircle: {fileID: 0}
 --- !u!114 &114897219883579148
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -22,6 +22,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 												// このスイッチが入っていないとカーブは使われない
 	public float useCurvesHeight = 0.5f;		// カーブ補正の有効高さ（地面をすり抜けやすい時には大きくする）
 
+    private float yBase;
+
 	// 以下キャラクターコントローラ用パラメタ
 	// 前進速度
 	public float forwardSpeed = 7.0f;
@@ -51,17 +53,10 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	static int jumpState = Animator.StringToHash("Base Layer.Jump");
 	static int restState = Animator.StringToHash("Base Layer.Rest");
 
-    public Transform player;
     public float speed = 5.0f;
     private bool touchStart = false;
-    private Vector2 pointA;
-    private Vector2 pointB;
 
     //private Vector3 mousedownCameraProjectedRight, mousedownCameraProjectedForward;
-
-
-    public Transform circle;
-    public Transform outerCircle;
 
     // 初期化
     void Start ()
@@ -133,9 +128,10 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x*Vector3.right + direction.y*Vector3.forward), step, 0.0f);
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
         Vector3 mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
-        Vector3 mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.forward, transform.up).normalized;
+        Vector3 mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.up, transform.up).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownCameraProjectedRight + direction.y * mousedownCameraProjectedForward), step, 0.0f);
-        
+        //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * transform.right + direction.y * transform.forward), step, 0.0f);
+
         transform.rotation = Quaternion.LookRotation(newDir);
 
 
@@ -152,7 +148,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		// 現在のベースレイヤーがjumpStateの時
 		else if(currentBaseState.nameHash == jumpState)
 		{
-			cameraObject.SendMessage("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
+			//cameraObject.SendMessage("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
 			// ステートがトランジション中でない場合
 			if(!anim.IsInTransition(0))
 			{
