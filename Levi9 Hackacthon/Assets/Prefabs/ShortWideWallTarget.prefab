@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 1599319987249682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -13.21}
-  m_LocalScale: {x: 8.622026, y: 8.622026, z: 8.622026}
+  m_LocalScale: {x: 8.671631, y: 8.671631, z: 8.671631}
   m_Children:
   - {fileID: 4360072043920288}
   m_Father: {fileID: 0}
@@ -183,14 +183,14 @@ MonoBehaviour:
   m_Script: {fileID: -1631628248, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mTrackableName: KDiamonds1
+  mTrackableName: JDiamonds1
   mPreserveChildSize: 0
   mInitializedInEditor: 1
   mDataSetPath: Vuforia/Cards.xml
-  mAspectRatio: 1.3685756
+  mAspectRatio: 1.3764493
   mImageTargetType: 0
   mWidth: 6.3
-  mHeight: 8.622026
+  mHeight: 8.671631
 --- !u!114 &114310997095067748
 MonoBehaviour:
   m_ObjectHideFlags: 1
