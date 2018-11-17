@@ -4,6 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags: []
+  tags:
+  - Joy1
+  - Joy2
   layers:
   - Default
   - TransparentFX

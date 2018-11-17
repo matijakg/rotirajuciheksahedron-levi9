@@ -10,6 +10,11 @@ public class FloatingJoystick : Joystick
     {
         background.gameObject.SetActive(false);
     }
+    
+    public void resetIsPressed()
+    {
+        isPressed = false;
+    }
 
     public override void OnDrag(PointerEventData eventData)
     {

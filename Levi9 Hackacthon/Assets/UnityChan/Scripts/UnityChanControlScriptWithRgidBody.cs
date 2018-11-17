@@ -13,8 +13,11 @@ using System.Collections;
 
 public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 {
+    public Joystick joystick;
+    public FloatingJoystick button;
 
 	public float animSpeed = 1.5f;				// アニメーション再生速度設定
+    public float animSpeed = 1.5f;				// アニメーション再生速度設定
 	public float lookSmoother = 3.0f;			// a smoothing setting for camera motion
 	public bool useCurves = true;				// Mecanimでカーブ調整を使うか設定する
 												// このスイッチが入っていないとカーブは使われない
@@ -58,6 +61,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 
     private Transform mousedownTransform;
     private Vector3 mousedownCameraProjectedRight, mousedownCameraProjectedForward;
+    //private Vector3 mousedownCameraProjectedRight, mousedownCameraProjectedForward;
 
 
     public Transform circle;
@@ -81,6 +85,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 
     void Update ()
     {
+    {/*
         if (Input.GetMouseButtonDown(0))
         {
             // Generate joystick
@@ -90,11 +95,13 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
             outerCircle.transform.position = pointA * -1;
             circle.GetComponent<SpriteRenderer>().enabled = true;
             outerCircle.GetComponent<SpriteRenderer>().enabled = true;*/
+            outerCircle.GetComponent<SpriteRenderer>().enabled = true;
         }
         if (Input.GetMouseButton(0))
         {
             touchStart = true;
             mousedownTransform = cameraObject.transform;
+
             //mousedownTransform = cameraObject.transform;
             mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
             mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.forward, transform.up).normalized;
@@ -104,6 +111,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         {
             touchStart = false;
         }
+        } */
     }
 	
 	
@@ -125,6 +133,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
             outerCircle.GetComponent<SpriteRenderer>().enabled = false;*/
         }
 
+        Vector2 direction = new Vector2(joystick.Horizontal, joystick.Vertical);
 
 
 
@@ -136,6 +145,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         // float v = Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義
         anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
 		anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
+		anim.SetFloat("Direction", 0); 						// Animator側で設定している"Direction"パラメタにhを渡す
 		anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 		currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
 		rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
@@ -157,6 +167,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		
 		if (Input.GetButtonDown("Jump")) {	// スペースキーを入力したら
 
+		if (button.isPressed) {	// スペースキーを入力したら
+            
 			//アニメーションのステートがLocomotionの最中のみジャンプできる
 			if (currentBaseState.nameHash == locoState){
 				//ステート遷移中でなかったらジャンプできる
@@ -179,6 +191,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x*Vector3.right + direction.y*Vector3.forward), step, 0.0f);
         Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownTransform.right + direction.y * mousedownTransform.forward), step, 0.0f);
+        Vector3 mousedownCameraProjectedRight = Vector3.ProjectOnPlane(cameraObject.transform.right, transform.up).normalized;
+        Vector3 mousedownCameraProjectedForward = Vector3.ProjectOnPlane(cameraObject.transform.forward, transform.up).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, (direction.x * mousedownCameraProjectedRight + direction.y * mousedownCameraProjectedForward), step, 0.0f);
         
         transform.rotation = Quaternion.LookRotation(newDir);
