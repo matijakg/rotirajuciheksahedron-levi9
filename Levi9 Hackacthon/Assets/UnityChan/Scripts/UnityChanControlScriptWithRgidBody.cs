@@ -12,9 +12,9 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 
     public float animSpeed = 1.5f;				
 	public float lookSmoother = 3.0f;			// a smoothing setting for camera motion
-	public bool useCurves = true;				// Mecanimでカーブ調整を使うか設定する
-												// このスイッチが入っていないとカーブは使われない
-	public float useCurvesHeight = 0.5f;		// カーブ補正の有効高さ（地面をすり抜けやすい時には大きくする）
+	public bool useCurves = true;		
+										
+	public float useCurvesHeight = 0.5f;
 
 
 	public float forwardSpeed = 7.0f;
